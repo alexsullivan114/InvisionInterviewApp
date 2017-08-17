@@ -28,7 +28,9 @@ dependencies {
     // Retrofit for networking purposes.
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     // Simple retrofit xml converter
-    compile 'com.squareup.retrofit2:converter-simplexml:2.3.0'
+    compile ('com.squareup.retrofit2:converter-simplexml:2.3.0') {
+        exclude module: 'stax-api'
+    }
     // OkHttp as a client library for retrofit
     compile "com.squareup.okhttp3:okhttp:$project.ext.okHttpVersion"
     compile "com.squareup.retrofit2:adapter-rxjava2:$project.ext.retrofitVersion"

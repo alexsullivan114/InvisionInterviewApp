@@ -11,5 +11,5 @@ interface InvisionBlogService {
     }
 
     @GET("index.xml")
-    fun latestBlogPosts(): Observable<String>
+    fun latestBlogPosts(): Observable<InvisionBlogPost>
 }

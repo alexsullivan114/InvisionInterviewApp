@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +27,12 @@ class MainActivity : AppCompatActivity() {
         disposable = presenter.getBlogPosts()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+            .toList()
+            .subscribe({
+                print("Wowee it works")
+            }, {
+                print("Aww no it didnt work")
+            })
     }
 
     override fun onStop() {
@@ -39,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             .baseUrl(InvisionBlogService.baseUrl)
             .client(OkHttpClient())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(SimpleXmlConverterFactory.create())
             .build()
             .create(InvisionBlogService::class.java)
         val blogPostRepository = InvisionBlogPostRepository(service)
