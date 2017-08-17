@@ -8,6 +8,9 @@ import android.widget.TextView
 import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogPost
 import com.alexsullivan.invisioninterviewapp.R
 
+/**
+ * Simple adapter class to show blog posts. Very trim right now, but can be expanded to look at least somewhat presentable.
+ */
 class BlogPostListAdapter(private val blogPosts: List<InvisionBlogPost>,
                           private val blogPostClickListener: BlogPostClickListener): RecyclerView.Adapter<BlogPostListAdapter.BlogPostViewHolder>() {
 
@@ -23,7 +26,7 @@ class BlogPostListAdapter(private val blogPosts: List<InvisionBlogPost>,
 
     override fun getItemCount() = blogPosts.size
 
-    inner class BlogPostViewHolder(val root: View): RecyclerView.ViewHolder(root) {
+    inner class BlogPostViewHolder(root: View): RecyclerView.ViewHolder(root) {
         val titleTextView = root.findViewById(R.id.title) as TextView
         init {
             root.setOnClickListener {
@@ -33,6 +36,10 @@ class BlogPostListAdapter(private val blogPosts: List<InvisionBlogPost>,
     }
 }
 
+/**
+ * Simple click listener for blog posts - any class utilizing this adapter must implement this interface
+ * to handle click callbacks.
+ */
 interface BlogPostClickListener {
     fun blogPostClicked(blogPost: InvisionBlogPost)
 }

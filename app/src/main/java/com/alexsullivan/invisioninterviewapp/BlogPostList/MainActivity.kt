@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogPost
 import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogPostRepository
 import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogService
+import com.alexsullivan.invisioninterviewapp.BlogPostViewing.BlogPostWebActivity
 import com.alexsullivan.invisioninterviewapp.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -48,7 +49,13 @@ class MainActivity : AppCompatActivity(), BlogPostClickListener {
     }
 
     override fun blogPostClicked(blogPost: InvisionBlogPost) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (blogPost.link == null) {
+            // Should show some type of error here.
+        }
+        blogPost.link?.let {
+            val intent = BlogPostWebActivity.buildIntent(it, this)
+            startActivity(intent)
+        }
     }
 
     private fun buildPresenter(): BlogPostPresenter {

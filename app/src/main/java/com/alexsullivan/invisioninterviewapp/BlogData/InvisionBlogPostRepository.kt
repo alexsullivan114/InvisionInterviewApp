@@ -2,6 +2,10 @@ package com.alexsullivan.invisioninterviewapp.BlogData
 
 import io.reactivex.Observable
 
+/**
+ * This should be the sole access point for invision web consumption. This class will utilize
+ * whatever blog service is passed to it to fetch data from that source.
+ */
 class InvisionBlogPostRepository(val blogService: InvisionBlogService): BlogPostRepository {
 
     override fun fetchLatestBlogPosts(): Observable<InvisionBlogPost> {
