@@ -1,4 +1,4 @@
-package com.alexsullivan.invisioninterviewapp
+package com.alexsullivan.invisioninterviewapp.BlogPostList
 
 import com.alexsullivan.invisioninterviewapp.BlogData.BlogPostRepository
 import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogPost

@@ -1,9 +1,13 @@
-package com.alexsullivan.invisioninterviewapp
+package com.alexsullivan.invisioninterviewapp.BlogPostList
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogPost
 import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogPostRepository
 import com.alexsullivan.invisioninterviewapp.BlogData.InvisionBlogService
+import com.alexsullivan.invisioninterviewapp.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -12,14 +16,17 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BlogPostClickListener {
 
     val presenter = buildPresenter()
     var disposable: Disposable? = null
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        recyclerView = findViewById(R.id.recyclerView) as RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onStart() {
@@ -28,8 +35,8 @@ class MainActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .toList()
-            .subscribe({
-                print("Wowee it works")
+            .subscribe({ posts ->
+                recyclerView.adapter = BlogPostListAdapter(posts, this)
             }, {
                 print("Aww no it didnt work")
             })
@@ -38,6 +45,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         disposable?.dispose()
+    }
+
+    override fun blogPostClicked(blogPost: InvisionBlogPost) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun buildPresenter(): BlogPostPresenter {
